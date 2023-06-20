@@ -74,3 +74,6 @@ crashlytics-build.properties
 # Jetbrain Rider Cache
 .idea/
 Assets/Plugins/Editor/JetBrains*
+
+# .DS_Store
+*.DS_Store
