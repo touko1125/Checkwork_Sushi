@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private ThemeManager _themeManager;
     [SerializeField] private InputManager _inputManager;
+    [SerializeField] private ScoreManager _scoreManager;
 
     private int _currentThemeLevel = 0;
     private Theme _currentTheme;
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
     private void ClearCurrentTheme()
     {
         Debug.Log("clear current theme");
+        _scoreManager.EatSushi(_currentThemeLevel);
         InitTheme();
     }
 
