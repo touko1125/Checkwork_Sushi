@@ -124,10 +124,6 @@ public class InputManager : MonoBehaviour
         {
             OnInputAnyKey?.Invoke('-');
         }
-        else if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            OnInputAnyKey?.Invoke('\b');
-        }
         else
         {
             OnInputAnyKey?.Invoke('\0');

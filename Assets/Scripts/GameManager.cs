@@ -26,19 +26,19 @@ public class GameManager : MonoBehaviour
         _sushiController.OnReachedDestination = OutCurrentTheme;
     }
 
-    private bool IsMatchInputAndTheme()
+    private bool IsMatchInputTheme()
     {
         var currentInputCharNum = _currentInputStr.Length;
 
-        var inputMatchTheme = _currentTheme.themeAlphabets;
+        var inputMatchTheme = new List<string>(_currentTheme.themeAlphabets);
         //現在の入力全ての文字に対して文字が一致するかの判定
         for (var i = 0; i < currentInputCharNum; i++)
         {
-            //一致するテーマ文字がなくなった時点で一致するものはない
-            if (inputMatchTheme.Count == 0) return false;
-            
             //解答例の中で文字がカーソル一の文字と一致しないものを削除していく
             inputMatchTheme.RemoveAll(alphabet => alphabet[i] != _currentInputStr[i]);
+            
+            //一致するテーマ文字がなくなった時点で一致するものはない
+            if (inputMatchTheme.Count == 0) return false;
         }
 
         //この時点では入力文字列の中にマッチするものが1つ以上あるはずなので一番上のものを表示しハイライトする
@@ -55,21 +55,19 @@ public class GameManager : MonoBehaviour
     {
         //NULL文字であれば処理をしない
         if (inputChar == '\0') return;
-        
-        if (inputChar == '\b')
-        {
-            if (_currentInputStr.Length == 0) return;
-            
-            //最後の文字を取り除く
-            _currentInputStr.Remove(_currentInputStr.Length - 1);
-        }
-        else
-        {
-            _currentInputStr += inputChar;
-        }
 
-        //入力を受け取って文字の更新が終わったタイミングでテーマを一致しているかの判定をする
-        if (IsMatchInputAndTheme()) ClearCurrentTheme();
+        //新規にきた文字がお題に一致しているかどうか判定
+        var isMatchChar = _currentTheme.themeAlphabets
+            .FindAll(alphabet => alphabet.Length > _currentInputStr.Length &&
+                                 alphabet[_currentInputStr.Length] == inputChar).Count > 0;
+        
+        if (!isMatchChar) return;
+        
+        //一致すれば文字列に追加
+        _currentInputStr += inputChar;
+            
+        //文字列全体がお題に一致しているかどうかを判定
+        if (IsMatchInputTheme()) ClearCurrentTheme();
     }
 
     private void ClearCurrentTheme()
