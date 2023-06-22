@@ -13,8 +13,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ThemeManager _themeManager;
     [SerializeField] private InputManager _inputManager;
     [SerializeField] private ScoreManager _scoreManager;
+    [SerializeField] private TimeManager _timeManager;
 
     private int _currentThemeLevel = 0;
+    private int _currentBarrageNum = 0;
     private Theme _currentTheme;
     private string _currentInputStr = "";
 
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
 
         _inputManager.OnInputAnyKey = input => ReceiveInputKey(input);
         _sushiController.OnReachedDestination = OutCurrentTheme;
+        _timeManager.OnEndTimer = TimeUp;
     }
 
     private bool IsMatchInputTheme()
@@ -60,21 +63,37 @@ public class GameManager : MonoBehaviour
         var isMatchChar = _currentTheme.themeAlphabets
             .FindAll(alphabet => alphabet.Length > _currentInputStr.Length &&
                                  alphabet[_currentInputStr.Length] == inputChar).Count > 0;
-        
-        if (!isMatchChar) return;
-        
-        //一致すれば文字列に追加
-        _currentInputStr += inputChar;
+
+        if (!isMatchChar)
+        {
+            //連打数のリセット
+            _currentBarrageNum = 0;
+        }
+        else
+        {
+            //連打数の加算
+            _currentBarrageNum++;
             
-        //文字列全体がお題に一致しているかどうかを判定
-        if (IsMatchInputTheme()) ClearCurrentTheme();
+            //一致すれば文字列に追加
+            _currentInputStr += inputChar;
+            
+            //文字列全体がお題に一致しているかどうかを判定
+            if (IsMatchInputTheme()) ClearCurrentTheme();   
+        }
+
+        //連打数によるタイマーの更新を行う
+        _timeManager.CalculateTimeBonus(_currentBarrageNum);
     }
 
     private void ClearCurrentTheme()
     {
-        Debug.Log("clear current theme");
         _scoreManager.EatSushi(_currentThemeLevel);
         InitTheme();
+    }
+
+    private void TimeUp()
+    {
+        
     }
 
     private void OutCurrentTheme()

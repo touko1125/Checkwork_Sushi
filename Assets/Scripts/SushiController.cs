@@ -36,7 +36,8 @@ public class SushiController : MonoBehaviour
         _moveTween = this.GetComponent<RectTransform>()
             .DOAnchorPos(_destinationPos.anchoredPosition, MOVE_TIME)
             .SetEase(Ease.Linear)
-            .OnComplete(OnCompleteMove);
+            .OnComplete(OnCompleteMove)
+            .SetLink(this.gameObject);
     }
 
     private void OnCompleteMove()
