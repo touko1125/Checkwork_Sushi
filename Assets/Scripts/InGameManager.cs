@@ -6,7 +6,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class InGameManager : MonoBehaviour
 {
     [SerializeField] private SushiController _sushiController;
 
@@ -14,9 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputManager _inputManager;
     [SerializeField] private ScoreManager _scoreManager;
     [SerializeField] private TimeManager _timeManager;
+    [SerializeField] private BarrageManager _barrageManager;
 
     private int _currentThemeLevel = 0;
-    private int _currentBarrageNum = 0;
     private Theme _currentTheme;
     private string _currentInputStr = "";
 
@@ -67,12 +67,12 @@ public class GameManager : MonoBehaviour
         if (!isMatchChar)
         {
             //連打数のリセット
-            _currentBarrageNum = 0;
+            _barrageManager.ResetBarrageCount();
         }
         else
         {
             //連打数の加算
-            _currentBarrageNum++;
+            _barrageManager.PlusBarrageCount();
             
             //一致すれば文字列に追加
             _currentInputStr += inputChar;
@@ -80,9 +80,6 @@ public class GameManager : MonoBehaviour
             //文字列全体がお題に一致しているかどうかを判定
             if (IsMatchInputTheme()) ClearCurrentTheme();   
         }
-
-        //連打数によるタイマーの更新を行う
-        _timeManager.CalculateTimeBonus(_currentBarrageNum);
     }
 
     private void ClearCurrentTheme()

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
+using UniRx;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
@@ -15,7 +15,7 @@ public class ScoreManager : MonoBehaviour
         { 4, 500 }
     };
 
-    private Dictionary<int, int> _currentClearRecord = new Dictionary<int, int>()
+    private ReactiveDictionary<int, int> _currentClearRecord = new ReactiveDictionary<int, int>()
     {
         { 0, 0 },
         { 1, 0 },
@@ -24,12 +24,11 @@ public class ScoreManager : MonoBehaviour
         { 4, 0 }
     };
 
-    [SerializeField] private List<TextMeshProUGUI> _scoreDisplayTextList = new List<TextMeshProUGUI>();
+    public IReadOnlyReactiveDictionary<int, int> CurrentClearRecord => _currentClearRecord;
 
     public void EatSushi(int eatSushiLevel)
     {
         _currentClearRecord[eatSushiLevel] += 1;
-        _scoreDisplayTextList[eatSushiLevel].text = _currentClearRecord[eatSushiLevel].ToString("00");
     }
 
     public int GetTotalScore()
