@@ -6,6 +6,17 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    private static ScoreManager instance;
+    public static ScoreManager Instance{ 
+        get {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<ScoreManager>();
+            }
+            return instance;
+        }
+    }
+    
     private Dictionary<int, int> _scoreByLevelTable = new Dictionary<int, int>()
     {
         { 0, 100 },
@@ -25,6 +36,29 @@ public class ScoreManager : MonoBehaviour
     };
 
     public IReadOnlyReactiveDictionary<int, int> CurrentClearRecord => _currentClearRecord;
+
+    private void Awake()
+    {
+        CheckInstance();
+    }
+
+    private void CheckInstance()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    public void InitScore()
+    {
+        _currentClearRecord.Values.ToList().ForEach(record => record = 0);
+    }
 
     public void EatSushi(int eatSushiLevel)
     {

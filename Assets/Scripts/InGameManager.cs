@@ -5,6 +5,7 @@ using System.Linq;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviour
 {
@@ -23,8 +24,9 @@ public class InGameManager : MonoBehaviour
     private void Awake()
     {
         InitTheme();
+        _scoreManager.InitScore();
 
-        _inputManager.OnInputAnyKey = input => ReceiveInputKey(input);
+        _inputManager.OnInputAnyKey = ReceiveInputKey;
         _sushiController.OnReachedDestination = OutCurrentTheme;
         _timeManager.OnEndTimer = TimeUp;
     }
@@ -90,12 +92,12 @@ public class InGameManager : MonoBehaviour
 
     private void TimeUp()
     {
-        
+        SceneManager.LoadScene("Result");
     }
 
     private void OutCurrentTheme()
     {
-        Debug.Log("out current theme");
+        SceneManager.LoadScene("Result");
     }
 
     private void InitTheme()
