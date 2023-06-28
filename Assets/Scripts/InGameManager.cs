@@ -17,7 +17,17 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private TimeManager _timeManager;
     [SerializeField] private BarrageManager _barrageManager;
 
+    private Dictionary<int, int> clearThemeLevelDict = new Dictionary<int, int>()
+    {
+        { 0, 5 },
+        { 1, 10 },
+        { 2, 17 },
+        { 3, 25 },
+        { 4, 35 }
+    };
+
     private int _currentThemeLevel = 0;
+    private int _currentClearThemeNum = 0;
     private Theme _currentTheme;
     private string _currentInputStr = "";
 
@@ -84,9 +94,24 @@ public class InGameManager : MonoBehaviour
         }
     }
 
+    private void UpdateThemeLevel()
+    {
+        _currentClearThemeNum++;
+        if (_currentClearThemeNum > clearThemeLevelDict[_currentThemeLevel])
+        {
+            _currentThemeLevel++;
+            if(_currentThemeLevel == clearThemeLevelDict.Count)
+            {
+                _currentThemeLevel = 0;
+                _currentClearThemeNum = 0;
+            }
+        }
+    }
+
     private void ClearCurrentTheme()
     {
         _scoreManager.EatSushi(_currentThemeLevel);
+        UpdateThemeLevel();
         InitTheme();
     }
 
