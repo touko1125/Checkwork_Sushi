@@ -28,7 +28,7 @@ public class BarrageManager : MonoBehaviour
     {
         _barrageCount.Value++;
         var barrageBonus = _barrageTimeBonusDict.ToList().Find(pair => _barrageCount.Value == pair.Key);
-        if (barrageBonus.Equals(default(KeyValuePair<int, float>)))
+        if (!barrageBonus.Equals(default(KeyValuePair<int, float>)))
         {
             _timeManager.PlusTime(barrageBonus.Value);
         }
