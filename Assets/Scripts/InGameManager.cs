@@ -52,6 +52,8 @@ public class InGameManager : MonoBehaviour
             //解答例の中で文字がカーソル一の文字と一致しないものを削除していく
             inputMatchTheme.RemoveAll(alphabet => alphabet[i] != _currentInputStr[i]);
             
+            Debug.Log(inputMatchTheme.Count);
+            
             //一致するテーマ文字がなくなった時点で一致するものはない
             if (inputMatchTheme.Count == 0) return false;
         }
@@ -71,10 +73,23 @@ public class InGameManager : MonoBehaviour
         //NULL文字であれば処理をしない
         if (inputChar == '\0') return;
 
+        var checkInputStr = _currentInputStr + inputChar;
         //新規にきた文字がお題に一致しているかどうか判定
         var isMatchChar = _currentTheme.themeAlphabets
-            .FindAll(alphabet => alphabet.Length > _currentInputStr.Length &&
-                                 alphabet[_currentInputStr.Length] == inputChar).Count > 0;
+            .Select(alphabet =>
+            {
+                //入力されている部分までのみ判定
+                if (alphabet.Length > checkInputStr.Length)
+                {
+                    return alphabet
+                        .Remove(checkInputStr.Length,
+                            alphabet.Length - checkInputStr.Length);   
+                }
+
+                return alphabet;
+            })
+            .ToList()
+            .FindAll(removed => string.Equals(removed, checkInputStr)).Count > 0;
 
         if (!isMatchChar)
         {
@@ -86,8 +101,8 @@ public class InGameManager : MonoBehaviour
             //連打数の加算
             _barrageManager.PlusBarrageCount();
             
-            //一致すれば文字列に追加
-            _currentInputStr += inputChar;
+            //一致すれば文字列を更新
+            _currentInputStr = checkInputStr;
             
             //文字列全体がお題に一致しているかどうかを判定
             if (IsMatchInputTheme()) ClearCurrentTheme();   
