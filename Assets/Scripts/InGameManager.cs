@@ -34,11 +34,10 @@ public class InGameManager : MonoBehaviour
     private void Awake()
     {
         InitTheme();
-        _scoreManager.InitScore();
 
         _inputManager.OnInputAnyKey = ReceiveInputKey;
-        _sushiController.OnReachedDestination = OutCurrentTheme;
-        _timeManager.OnEndTimer = TimeUp;
+        _sushiController.OnReachedDestination = EndGame;
+        _timeManager.OnEndTimer = EndGame;
     }
 
     private bool IsMatchInputTheme()
@@ -129,13 +128,9 @@ public class InGameManager : MonoBehaviour
         InitTheme();
     }
 
-    private void TimeUp()
+    private void EndGame()
     {
-        SceneManager.LoadScene("Result");
-    }
-
-    private void OutCurrentTheme()
-    {
+        _scoreManager.SaveScore();
         SceneManager.LoadScene("Result");
     }
 

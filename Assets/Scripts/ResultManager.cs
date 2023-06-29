@@ -19,13 +19,31 @@ public class ResultManager : MonoBehaviour
     {
         DisplayFinalScore();
     }
+    
+    private Dictionary<int, int> LoadScore()
+    {
+        var scoreDict = new Dictionary<int, int>();
+        for (var i = 0; i < _scoreDisplayTextList.Count; i++)
+        {
+            var score = PlayerPrefs.GetInt("score" + i.ToString());
+            scoreDict[i] = score;
+        }
+
+        return scoreDict;
+    }
+
+    private int LoadTotalScore()
+    {
+        var score = PlayerPrefs.GetInt("total");
+        return score;
+    }
 
     private void DisplayFinalScore()
     {
-        var scoreDict = ScoreManager.CurrentClearRecord;
+        var scoreDict = LoadScore();
         scoreDict.ToList().ForEach(record => DisplayScoreText(record.Key,record.Value));
 
-        var totalScore = ScoreManager.GetTotalScore();
+        var totalScore = LoadTotalScore();
         _totalScoreText.text = totalScore.ToString() + "円分のお寿司をゲット！";
         var finalBenefit = totalScore - NORMAL_COURCE_LATCH;
         _finalBenefitText.text = "<size=+10>" + finalBenefit.ToString() + "</size> <color=#44933F>円分お得でした！</color>";
