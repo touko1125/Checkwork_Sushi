@@ -51,9 +51,7 @@ public class InGameManager : MonoBehaviour
         {
             //解答例の中で文字がカーソル一の文字と一致しないものを削除していく
             inputMatchTheme.RemoveAll(alphabet => alphabet[i] != _currentInputStr[i]);
-            
-            Debug.Log(inputMatchTheme.Count);
-            
+
             //一致するテーマ文字がなくなった時点で一致するものはない
             if (inputMatchTheme.Count == 0) return false;
         }
@@ -115,7 +113,8 @@ public class InGameManager : MonoBehaviour
         if (_currentClearThemeNum > clearThemeLevelDict[_currentThemeLevel])
         {
             _currentThemeLevel++;
-            if(_currentThemeLevel == clearThemeLevelDict.Count)
+            var maxLevel = clearThemeLevelDict.Keys.ToList()[clearThemeLevelDict.Count - 1];
+            if(_currentThemeLevel == maxLevel)
             {
                 _currentThemeLevel = 0;
                 _currentClearThemeNum = 0;
