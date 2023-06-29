@@ -6,18 +6,7 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    private static ScoreManager instance;
-    public static ScoreManager Instance{ 
-        get {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<ScoreManager>();
-            }
-            return instance;
-        }
-    }
-    
-    private Dictionary<int, int> _scoreByLevelTable = new Dictionary<int, int>()
+    private static Dictionary<int, int> _scoreByLevelTable = new Dictionary<int, int>()
     {
         { 0, 100 },
         { 1, 180 },
@@ -26,7 +15,7 @@ public class ScoreManager : MonoBehaviour
         { 4, 500 }
     };
 
-    private ReactiveDictionary<int, int> _currentClearRecord = new ReactiveDictionary<int, int>()
+    private static ReactiveDictionary<int, int> _currentClearRecord = new ReactiveDictionary<int, int>()
     {
         { 0, 0 },
         { 1, 0 },
@@ -35,25 +24,7 @@ public class ScoreManager : MonoBehaviour
         { 4, 0 }
     };
 
-    public IReadOnlyReactiveDictionary<int, int> CurrentClearRecord => _currentClearRecord;
-
-    private void Awake()
-    {
-        CheckInstance();
-    }
-
-    private void CheckInstance()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(this);
-        }
-    }
+    public static IReadOnlyReactiveDictionary<int, int> CurrentClearRecord => _currentClearRecord;
 
     public void InitScore()
     {
@@ -65,7 +36,7 @@ public class ScoreManager : MonoBehaviour
         _currentClearRecord[eatSushiLevel] += 1;
     }
 
-    public int GetTotalScore()
+    public static int GetTotalScore()
     {
         var totalScore = 0;
         _scoreByLevelTable.ToList().ForEach(table => totalScore += _currentClearRecord[table.Key] * table.Value);

@@ -22,10 +22,10 @@ public class ResultManager : MonoBehaviour
 
     private void DisplayFinalScore()
     {
-        var scoreDict = ScoreManager.Instance.CurrentClearRecord;
+        var scoreDict = ScoreManager.CurrentClearRecord;
         scoreDict.ToList().ForEach(record => DisplayScoreText(record.Key,record.Value));
 
-        var totalScore = ScoreManager.Instance.GetTotalScore();
+        var totalScore = ScoreManager.GetTotalScore();
         _totalScoreText.text = totalScore.ToString() + "円分のお寿司をゲット！";
         var finalBenefit = totalScore - NORMAL_COURCE_LATCH;
         _finalBenefitText.text = "<size=+10>" + finalBenefit.ToString() + "</size> <color=#44933F>円分お得でした！</color>";

@@ -23,7 +23,7 @@ public class InGameUIViewer : MonoBehaviour
 
     private void SetEvent()
     {
-        _scoreManager.CurrentClearRecord.ObserveReplace()
+        ScoreManager.CurrentClearRecord.ObserveReplace()
             .Subscribe(record => DisplayScoreText(record.Key, record.NewValue));
 
         _timeManager.CurrentTime.Subscribe(DisplayTime);
