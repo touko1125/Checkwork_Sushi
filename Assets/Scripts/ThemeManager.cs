@@ -43,17 +43,5 @@ public class ThemeManager : MonoBehaviour
         return randomTheme;
     }
     
-    /// <summary>
-    /// お題の文字を赤くハイライトする
-    /// </summary>
-    /// <param name="inputStr">現在の入力文字</param>
-    /// <param name="mostMatchedStr">お題の文字の中で現状最も入力に一致している文字</param>
-    public void HighlightThemeAlphabet(string inputStr,string mostMatchedStr)
-    {
-        //お題の文字列から入力されている分だけ削除する
-        mostMatchedStr = mostMatchedStr.Replace(inputStr, "");
-
-        //入力文だけ赤く表示する
-        _themeAlphabetText.text = "<color=red>" + inputStr + "</color>" + mostMatchedStr;
-    }
+    //_themeAlphabetTextを、入力されているアルファベット部分までだけ赤く表示する関数を以下に書いてみよう！
 }

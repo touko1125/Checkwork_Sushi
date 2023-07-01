@@ -27,7 +27,7 @@ public class InGameUIViewer : MonoBehaviour
             .Subscribe(record => DisplayScoreText(record.Key, record.NewValue));
 
         _timeManager.CurrentTime.Subscribe(DisplayTime);
-        _barrageManager.BarrageCount.Subscribe(DisplayBarrageSlider);
+        _barrageManager.ObserveEveryValueChanged(x => x.BarrageCount).Subscribe(DisplayBarrageSlider);
     }
 
     private void DisplayScoreText(int level,int score)

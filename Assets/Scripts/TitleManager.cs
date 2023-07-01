@@ -17,12 +17,9 @@ public class TitleManager : MonoBehaviour
             .SetLoops(-1, LoopType.Yoyo)
             .SetLink(this.gameObject);
     }
-
+    
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-        {
-            SceneManager.LoadScene("Main");
-        }
+        
     }
 }

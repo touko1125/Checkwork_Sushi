@@ -6,17 +6,18 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
 
 public class InGameManager : MonoBehaviour
 {
     [SerializeField] private SushiController _sushiController;
 
     [SerializeField] private ThemeManager _themeManager;
-    [SerializeField] private InputManager _inputManager;
     [SerializeField] private ScoreManager _scoreManager;
     [SerializeField] private TimeManager _timeManager;
     [SerializeField] private BarrageManager _barrageManager;
-
+    
+    //各レベルに上がるためのお題の正答数
     private Dictionary<int, int> clearThemeLevelDict = new Dictionary<int, int>()
     {
         { 0, 5 },
@@ -26,86 +27,162 @@ public class InGameManager : MonoBehaviour
         { 4, 35 }
     };
 
-    private int _currentThemeLevel = 0;
-    private int _currentClearThemeNum = 0;
+    private int _currentThemeLevel;     //現状のお題のレベル
+    private int _currentClearThemeNum;  //現状の正答お題数
+    
     private Theme _currentTheme;
-    private string _currentInputStr = "";
 
-    private void Awake()
+    private async void Awake()
     {
+        //ゲームクリア、ゲームオーバーのイベント設定
+        SetEvent();
+        
+        //テーマのデータの読み込みを行ない、それが完了し次第最初のお題を出す
+        await _themeManager.LoadThemeData();
         InitTheme();
+    }
 
-        _inputManager.OnInputAnyKey = ReceiveInputKey;
+    private void SetEvent()
+    {
+        //ゲームオーバーの機能
+        //Actionと呼ばれるイベント通知の機能を使用しています
         _sushiController.OnReachedDestination = EndGame;
         _timeManager.OnEndTimer = EndGame;
     }
 
-    private bool IsMatchInputTheme()
+    private void Update()
     {
-        var currentInputCharNum = _currentInputStr.Length;
-
-        var inputMatchTheme = new List<string>(_currentTheme.themeAlphabets);
-        //現在の入力全ての文字に対して文字が一致するかの判定
-        for (var i = 0; i < currentInputCharNum; i++)
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            //解答例の中で文字がカーソル一の文字と一致しないものを削除していく
-            inputMatchTheme.RemoveAll(alphabet => alphabet[i] != _currentInputStr[i]);
-
-            //一致するテーマ文字がなくなった時点で一致するものはない
-            if (inputMatchTheme.Count == 0) return false;
+            ReceiveInput('a');
         }
-
-        //この時点では入力文字列の中にマッチするものが1つ以上あるはずなので一番上のものを表示しハイライトする
-        _themeManager.HighlightThemeAlphabet(_currentInputStr,inputMatchTheme[0]);
-
-        //お題の文字数に入力文字数が達しているか
-        var isReachedThemeCharNum =
-            inputMatchTheme.FindAll(alphabet => alphabet.Length == currentInputCharNum).Count > 0;
-
-        return isReachedThemeCharNum;
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            ReceiveInput('b');
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            ReceiveInput('c');
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            ReceiveInput('d');
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            ReceiveInput('e');
+        }
+        else if (Input.GetKeyDown(KeyCode.F))
+        {
+            ReceiveInput('f');
+        }
+        else if (Input.GetKeyDown(KeyCode.G))
+        {
+            ReceiveInput('g');
+        }
+        else if (Input.GetKeyDown(KeyCode.H))
+        {
+            ReceiveInput('h');
+        }
+        else if (Input.GetKeyDown(KeyCode.I))
+        {
+            ReceiveInput('i');
+        }
+        else if (Input.GetKeyDown(KeyCode.J))
+        {
+            ReceiveInput('j');
+        }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            ReceiveInput('k');
+        }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            ReceiveInput('l');
+        }
+        else if (Input.GetKeyDown(KeyCode.M))
+        {
+            ReceiveInput('m');
+        }
+        else if (Input.GetKeyDown(KeyCode.N))
+        {
+            ReceiveInput('n');
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            ReceiveInput('o');
+        }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            ReceiveInput('p');
+        }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ReceiveInput('q');
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            ReceiveInput('r');
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            ReceiveInput('s');
+        }
+        else if (Input.GetKeyDown(KeyCode.T))
+        {
+            ReceiveInput('t');
+        }
+        else if (Input.GetKeyDown(KeyCode.U))
+        {
+            ReceiveInput('u');
+        }
+        else if (Input.GetKeyDown(KeyCode.V))
+        {
+            ReceiveInput('v');
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            ReceiveInput('w');
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            ReceiveInput('x');
+        }
+        else if (Input.GetKeyDown(KeyCode.Y))
+        {
+            ReceiveInput('y');
+        }
+        else if (Input.GetKeyDown(KeyCode.Z))
+        {
+            ReceiveInput('z');
+        }
+        else if (Input.GetKeyDown(KeyCode.Minus))
+        {
+            ReceiveInput('-');
+        }
     }
 
-    private void ReceiveInputKey(char inputChar)
+    //キー入力があった際に呼び出される関数
+    //この中で現在のお題と入力文字列が一致するかどうか判定しよう！
+    private void ReceiveInput(char inputChar)
     {
-        //NULL文字であれば処理をしない
-        if (inputChar == '\0') return;
-
-        var checkInputStr = _currentInputStr + inputChar;
-        //新規にきた文字がお題に一致しているかどうか判定
-        var isMatchChar = _currentTheme.themeAlphabets
-            .Select(alphabet =>
-            {
-                //入力されている部分までのみ判定
-                if (alphabet.Length > checkInputStr.Length)
-                {
-                    return alphabet
-                        .Remove(checkInputStr.Length,
-                            alphabet.Length - checkInputStr.Length);   
-                }
-
-                return alphabet;
-            })
-            .ToList()
-            .FindAll(removed => string.Equals(removed, checkInputStr)).Count > 0;
-
-        if (!isMatchChar)
-        {
-            //連打数のリセット
-            _barrageManager.ResetBarrageCount();
-        }
-        else
-        {
-            //連打数の加算
-            _barrageManager.PlusBarrageCount();
-            
-            //一致すれば文字列を更新
-            _currentInputStr = checkInputStr;
-            
-            //文字列全体がお題に一致しているかどうかを判定
-            if (IsMatchInputTheme()) ClearCurrentTheme();   
-        }
+        
     }
 
+    //判定の結果お題の文字が入力できていればこの関数を呼び出そう！
+    private void ClearCurrentTheme()
+    {
+        //スコアの加算
+        _scoreManager.EatSushi(_currentThemeLevel);
+        
+        //お題の正答数を増やし、必要に応じてお題のレベルを上げる
+        UpdateThemeLevel();
+        
+        //お題の初期化
+        InitTheme();
+    }
+    
+    //これまでのお題の正答数に応じて問題のレベルを上げる関数
     private void UpdateThemeLevel()
     {
         _currentClearThemeNum++;
@@ -120,24 +197,20 @@ public class InGameManager : MonoBehaviour
             }
         }
     }
-
-    private void ClearCurrentTheme()
-    {
-        _scoreManager.EatSushi(_currentThemeLevel);
-        UpdateThemeLevel();
-        InitTheme();
-    }
-
-    private void EndGame()
-    {
-        _scoreManager.SaveScore();
-        SceneManager.LoadScene("Result");
-    }
-
+    
+    //お題の新規作成を行う関数
     private void InitTheme()
     {
-        _currentInputStr = "";
+        //現在の問題レベルで新たな問題の作成
         _currentTheme = _themeManager.GenerateTheme(_currentThemeLevel);
+        
+        //寿司の見た目を現在のレベルの皿で初期化
         _sushiController.Init(_currentThemeLevel);
+    }
+
+    //ゲーム終了条件を満たしたらリザルト画面へ遷移
+    private void EndGame()
+    {
+        SceneManager.LoadScene("Result");
     }
 }

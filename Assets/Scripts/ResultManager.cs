@@ -25,7 +25,7 @@ public class ResultManager : MonoBehaviour
         var scoreDict = new Dictionary<int, int>();
         for (var i = 0; i < _scoreDisplayTextList.Count; i++)
         {
-            var score = PlayerPrefs.GetInt("score" + i.ToString());
+            var score = PlayerPrefs.GetInt("score" + i.ToString(),0);
             scoreDict[i] = score;
         }
 
@@ -34,7 +34,7 @@ public class ResultManager : MonoBehaviour
 
     private int LoadTotalScore()
     {
-        var score = PlayerPrefs.GetInt("total");
+        var score = PlayerPrefs.GetInt("total",0);
         return score;
     }
 
@@ -52,15 +52,5 @@ public class ResultManager : MonoBehaviour
     private void DisplayScoreText(int level,int score)
     {
         _scoreDisplayTextList[level].text = score.ToString("00");
-    }
-
-    public void RetryButton()
-    {
-        SceneManager.LoadScene("Main");
-    }
-
-    public void TitleButton()
-    {
-        SceneManager.LoadScene("Title");
     }
 }
