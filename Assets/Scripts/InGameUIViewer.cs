@@ -8,12 +8,15 @@ using UnityEngine.UI;
 public class InGameUIViewer : MonoBehaviour
 {
     [SerializeField] private List<TextMeshProUGUI> _scoreDisplayTextList = new List<TextMeshProUGUI>();
+    
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private Slider _timeBonusSlider;
     
-    [SerializeField] private ScoreManager _scoreManager;
+    [SerializeField] private Image _themeBackImage;
+    [SerializeField] private TextMeshProUGUI _themeJapaneseText;
+    [SerializeField] private TextMeshProUGUI _themeAlphabetText;
+    
     [SerializeField] private TimeManager _timeManager;
-    [SerializeField] private BarrageManager _barrageManager;
 
     private const int MAX_BARRAGE_COUNT = 100;
     private void Awake()
@@ -23,11 +26,7 @@ public class InGameUIViewer : MonoBehaviour
 
     private void SetEvent()
     {
-        _scoreManager.CurrentClearRecord.ObserveReplace()
-            .Subscribe(record => DisplayScoreText(record.Key, record.NewValue));
-
         _timeManager.CurrentTime.Subscribe(DisplayTime);
-        _barrageManager.BarrageCount.Subscribe(DisplayBarrageSlider);
     }
 
     private void DisplayScoreText(int level,int score)
@@ -35,13 +34,19 @@ public class InGameUIViewer : MonoBehaviour
         _scoreDisplayTextList[level].text = score.ToString("00");
     }
 
-    private void DisplayTime(float time)
+    private void DisplayThemeText(string japanese,string alphabet)
     {
-        _timerText.text = "残り<size=+20>" + time.ToString("000") + "</size>秒";
+        _themeJapaneseText.text = japanese;
+        _themeAlphabetText.text = alphabet;
     }
 
     private void DisplayBarrageSlider(int barrageNum)
     {
         _timeBonusSlider.value = (float)barrageNum / MAX_BARRAGE_COUNT;
+    }
+    
+    private void DisplayTime(float time)
+    {
+        _timerText.text = "残り<size=+20>" + time.ToString("000") + "</size>秒";
     }
 }
