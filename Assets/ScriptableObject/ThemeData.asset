@@ -1,0 +1,238 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: ThemeData
+  m_EditorClassIdentifier: Assembly-CSharp::ThemeData
+  themeList:
+  - themeStr: "\u3042\u304B"
+    themeStrForDisplay: "\u8D64"
+    themeAlphabets:
+    - aka
+  - themeStr: "\u3059\u3057"
+    themeStrForDisplay: "\u5BFF\u53F8"
+    themeAlphabets:
+    - susi
+    - sushi
+  - themeStr: "\u3082\u3082"
+    themeStrForDisplay: "\u6843"
+    themeAlphabets:
+    - momo
+  - themeStr: "\u304B\u3093\u3058"
+    themeStrForDisplay: "\u6F22\u5B57"
+    themeAlphabets:
+    - kanji
+    - kannji
+    - kaxnji
+    - kanzi
+    - kannzi
+    - kaxnzi
+  - themeStr: "\u3044\u3061\u3054"
+    themeStrForDisplay: "\u82FA"
+    themeAlphabets:
+    - ichigo
+    - itigo
+  - themeStr: "\u3055\u3093\u307E"
+    themeStrForDisplay: "\u79CB\u5200\u9B5A"
+    themeAlphabets:
+    - sanma
+    - sannma
+    - saxnma
+  - themeStr: "\u3067\u3093\u308F"
+    themeStrForDisplay: "\u96FB\u8A71"
+    themeAlphabets:
+    - denwa
+    - dennwa
+    - dexnwa
+  - themeStr: "\u304C\u306F\u304F"
+    themeStrForDisplay: "\u304C\u306F\u304F"
+    themeAlphabets:
+    - gahaku
+  - themeStr: "\u3075\u3044\u3046\u3061"
+    themeStrForDisplay: "\u4E0D\u610F\u6253\u3061"
+    themeAlphabets:
+    - huiuchi
+    - huiuti
+  - themeStr: "\u3057\u3087\u3069\u3046"
+    themeStrForDisplay: "\u66F8\u9053"
+    themeAlphabets:
+    - syodou
+    - shodou
+  - themeStr: "\u3075\u3058\u3055\u3093"
+    themeStrForDisplay: "\u5BCC\u58EB\u5C71"
+    themeAlphabets:
+    - hujisan
+    - huzisan
+    - fujisan
+    - fuzisan
+  - themeStr: "\u304A\u304B\u308A\u306A"
+    themeStrForDisplay: "\u30AA\u30AB\u30EA\u30CA"
+    themeAlphabets:
+    - okarina
+  - themeStr: "\u3070\u3044\u304A\u308A\u3093"
+    themeStrForDisplay: "\u30D0\u30A4\u30AA\u30EA\u30F3"
+    themeAlphabets:
+    - baiorin
+  - themeStr: "\u3082\u3093\u3076\u3089\u3093"
+    themeStrForDisplay: "\u30E2\u30F3\u30D6\u30E9\u30F3"
+    themeAlphabets:
+    - monburan
+    - monnburan
+    - moxnburan
+  - themeStr: "\u3061\u3083\u3093\u307D\u3093"
+    themeStrForDisplay: "\u3061\u3083\u3093\u307D\u3093"
+    themeAlphabets:
+    - chanpon
+    - channpon
+    - chaxnpon
+    - tyanpom
+    - tyannpon
+    - tyaxnpon
+  - themeStr: "\u305D\u308A\u3066\u3043\u3042"
+    themeStrForDisplay: "\u30BD\u30EA\u30C6\u30A3\u30A2"
+    themeAlphabets:
+    - soritexia
+    - sorithia
+  - themeStr: "\u3059\u306A\u3069\u3051\u3044"
+    themeStrForDisplay: "\u7802\u6642\u8A08"
+    themeAlphabets:
+    - sunadokei
+  - themeStr: "\u3053\u304F\u3054\u3058\u3066\u3093"
+    themeStrForDisplay: "\u56FD\u8A9E\u8F9E\u5178"
+    themeAlphabets:
+    - kokugojiten
+    - kokugoziten
+  - themeStr: "\u3057\u3054\u3052\u3093\u304D\u3093"
+    themeStrForDisplay: "\u79C1\u8A9E\u53B3\u7981"
+    themeAlphabets:
+    - sigogenkin
+    - sigogennkin
+    - shigogenkin
+    - shigogennkin
+    - sigogexnkin
+    - shigogexnkin
+  - themeStr: "\u3044\u308D\u3048\u3093\u3074\u3064"
+    themeStrForDisplay: "\u8272\u925B\u7B46"
+    themeAlphabets:
+    - iroenpitu
+    - iroennpitu
+    - iroenpitsu
+    - iroennpitsu
+  - themeStr: "\u304F\u3089\u308A\u306D\u3063\u3068"
+    themeStrForDisplay: "\u30AF\u30E9\u30EA\u30CD\u30C3\u30C8"
+    themeAlphabets:
+    - kurarinetto
+  - themeStr: "\u3089\u3058\u304A\u305F\u3044\u305D\u3046"
+    themeStrForDisplay: "\u30E9\u30B8\u30AA\u4F53\u64CD"
+    themeAlphabets:
+    - rajiotaisou
+    - raziotaisou
+  - themeStr: "\u3058\u3087\u3046\u3082\u3093\u3069\u304D"
+    themeStrForDisplay: "\u7E04\u6587\u571F\u5668"
+    themeAlphabets:
+    - joumondoki
+    - joumonndoki
+    - joumoxndoki
+    - zyoumondoki
+    - zyoumonndoki
+    - zyoumoxndoki
+  - themeStr: "\u305B\u3093\u3061\u3081\u3093\u305F\u308B"
+    themeStrForDisplay: "\u30BB\u30F3\u30C1\u30E1\u30F3\u30BF\u30EB"
+    themeAlphabets:
+    - sentimentaru
+    - senchimentaru
+    - senntimentaru
+    - sennchimentaru
+  - themeStr: "\u3066\u308C\u3073\u3070\u3093\u3050\u307F"
+    themeStrForDisplay: "\u30C6\u30EC\u30D3\u756A\u7D44"
+    themeAlphabets:
+    - terebibangumi
+    - terebibanngumi
+    - terebibaxngumi
+  - themeStr: "\u304D\u3057\u3087\u3046\u3066\u3093\u3051\u3064"
+    themeStrForDisplay: "\u8D77\u627F\u8EE2\u7D50"
+    themeAlphabets:
+    - kisyoutenketu
+    - kishoutenketu
+    - kisyoutennketu
+    - kishoutennketu
+    - kisyoutenketsu
+    - kishoutenketsu
+    - kisyoutennketsu
+    - kishoutennketsu
+  - themeStr: "\u3057\u3093\u305F\u3044\u305D\u304F\u3066\u3044"
+    themeStrForDisplay: "\u8EAB\u4F53\u6E2C\u5B9A"
+    themeAlphabets:
+    - sintaisokutei
+    - sinntaisokutei
+    - shintaisokutei
+    - shinntaisokutei
+  - themeStr: "\u3066\u3093\u3054\u304F\u3068\u3058\u3054\u304F"
+    themeStrForDisplay: "\u5929\u56FD\u3068\u5730\u7344"
+    themeAlphabets:
+    - tengokutojigoku
+    - tenngokutojigoku
+    - tengokutozigoku
+    - tenngokutozigoku
+  - themeStr: "\u3044\u3061\u3052\u304D\u3072\u3063\u3055\u3064"
+    themeStrForDisplay: "\u4E00\u6483\u5FC5\u6BBA"
+    themeAlphabets:
+    - itigekihissatu
+    - ichigekihissatu
+    - itigekihissatsu
+    - ichigekihissatsu
+    - itigekihiltusatu
+    - ichigekihixtusatu
+    - itigekihiltusatsu
+    - ichigekihixtusatsu
+  - themeStr: "\u3042\u304D\u306F\u3070\u3089\u3059\u304F\u30FC\u308B"
+    themeStrForDisplay: "\u79CB\u8449\u539F\u30B9\u30AF\u30FC\u30EB"
+    themeAlphabets:
+    - akihabarasuku-ru
+  - themeStr: "\u3053\u3046\u3044\u3093\u3084\u306E\u3054\u3068\u3057"
+    themeStrForDisplay: "\u5149\u9670\u77E2\u306E\u5982\u3057"
+    themeAlphabets:
+    - kouinyanogotosi
+    - kouinnyanogotosi
+    - kouinyanogotoshi
+    - kouinnyanogotoshi
+  - themeStr: "\u307F\u3061\u306E\u305B\u3044\u3081\u3044\u305F\u3044"
+    themeStrForDisplay: "\u672A\u77E5\u306E\u751F\u547D\u4F53"
+    themeAlphabets:
+    - mitinoseimeitai
+    - michinoseimeitai
+  - themeStr: "\u304A\u304F\u307E\u3093\u3061\u3087\u3046\u3058\u3083"
+    themeStrForDisplay: "\u5104\u4E07\u9577\u8005"
+    themeAlphabets:
+    - okumantyouja
+    - okumanntyouja
+    - okumanchouja
+    - okumannchouja
+    - okumantyouzya
+    - okumanntyouzya
+    - okumanchouzya
+    - okumannchouzya
+  - themeStr: "\u3069\u3053\u3055\u3078\u304D\u3055\u3048\u3093\u3055\u3093"
+    themeStrForDisplay: "\u30C9\u30B3\u30B5\u30D8\u30AD\u30B5\u30A8\u30F3\u9178"
+    themeAlphabets:
+    - dokosahekisaensan
+    - dokosahekisaennsan
+  - themeStr: "\u304A\u3042\u305D\u3073\u306F\u3053\u3053\u307E\u3067\u3060"
+    themeStrForDisplay: "\u304A\u904A\u3073\u306F\u3053\u3053\u307E\u3067\u3060"
+    themeAlphabets:
+    - oasobihakokomadeda
+  - themeStr: "\u308D\u3046\u3069\u3046\u304D\u3058\u3085\u3093\u307B\u3046"
+    themeStrForDisplay: "\u52B4\u50CD\u57FA\u6E96\u6CD5"
+    themeAlphabets:
+    - roudoukijunhou
+    - roudoukizyunhou
+    - roudoukijunnhou
+    - roudoukizyunnhou
