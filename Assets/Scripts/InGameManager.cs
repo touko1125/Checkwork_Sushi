@@ -31,10 +31,16 @@ public class InGameManager : MonoBehaviour
     private Theme _currentTheme;
     private string _currentInputStr = "";
 
-    private void Awake()
+    private async void Awake()
     {
+        SetEvent();
+        
+        await _themeManager.LoadThemeData();
         InitTheme();
-
+    }
+    
+    private void SetEvent()
+    {
         _inputManager.OnInputAnyKey = ReceiveInputKey;
         _sushiController.OnReachedDestination = EndGame;
         _timeManager.OnEndTimer = EndGame;
@@ -42,27 +48,10 @@ public class InGameManager : MonoBehaviour
 
     private bool IsMatchInputTheme()
     {
-        var currentInputCharNum = _currentInputStr.Length;
+        var isAllMatch = _currentTheme.themeAlphabets.FindAll(alphabet =>
+            alphabet.StartsWith(_currentInputStr) && alphabet.Length == _currentInputStr.Length).Count > 0;
 
-        var inputMatchTheme = new List<string>(_currentTheme.themeAlphabets);
-        //現在の入力全ての文字に対して文字が一致するかの判定
-        for (var i = 0; i < currentInputCharNum; i++)
-        {
-            //解答例の中で文字がカーソル一の文字と一致しないものを削除していく
-            inputMatchTheme.RemoveAll(alphabet => alphabet[i] != _currentInputStr[i]);
-
-            //一致するテーマ文字がなくなった時点で一致するものはない
-            if (inputMatchTheme.Count == 0) return false;
-        }
-
-        //この時点では入力文字列の中にマッチするものが1つ以上あるはずなので一番上のものを表示しハイライトする
-        _themeManager.HighlightThemeAlphabet(_currentInputStr,inputMatchTheme[0]);
-
-        //お題の文字数に入力文字数が達しているか
-        var isReachedThemeCharNum =
-            inputMatchTheme.FindAll(alphabet => alphabet.Length == currentInputCharNum).Count > 0;
-
-        return isReachedThemeCharNum;
+        return isAllMatch;
     }
 
     private void ReceiveInputKey(char inputChar)
@@ -70,23 +59,11 @@ public class InGameManager : MonoBehaviour
         //NULL文字であれば処理をしない
         if (inputChar == '\0') return;
 
+        //新規に入力があった文字を足し合わせて正答アルファベット例の中のいずれかと前方一致するかどうかを判定
         var checkInputStr = _currentInputStr + inputChar;
-        //新規にきた文字がお題に一致しているかどうか判定
-        var isMatchChar = _currentTheme.themeAlphabets
-            .Select(alphabet =>
-            {
-                //入力されている部分までのみ判定
-                if (alphabet.Length > checkInputStr.Length)
-                {
-                    return alphabet
-                        .Remove(checkInputStr.Length,
-                            alphabet.Length - checkInputStr.Length);   
-                }
+        var matchedAlphabetList = _currentTheme.themeAlphabets.Where(alphabet => alphabet.StartsWith(checkInputStr)).ToList();
 
-                return alphabet;
-            })
-            .ToList()
-            .FindAll(removed => string.Equals(removed, checkInputStr)).Count > 0;
+        var isMatchChar = matchedAlphabetList.Count > 0;
 
         if (!isMatchChar)
         {
@@ -100,6 +77,7 @@ public class InGameManager : MonoBehaviour
             
             //一致すれば文字列を更新
             _currentInputStr = checkInputStr;
+            _themeManager.HighlightThemeAlphabet(_currentInputStr,matchedAlphabetList[0]);
             
             //文字列全体がお題に一致しているかどうかを判定
             if (IsMatchInputTheme()) ClearCurrentTheme();   
